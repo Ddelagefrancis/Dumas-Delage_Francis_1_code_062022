@@ -39,6 +39,7 @@ exports.login = (req, res, next) => {
             //  Connection réussie, id de l'utilisateur + token de connexion valide
             res.status(200).json({
                 userId: user.id,
+                pseudo: user.username,
                 token: jwt.sign(
                     { userId: user.id },
                     process.env.SECRET_TOKEN,
