@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    idusers: DataTypes.INTEGER,
     content: DataTypes.STRING,
     attachement: DataTypes.STRING,
     likes: DataTypes.INTEGER
