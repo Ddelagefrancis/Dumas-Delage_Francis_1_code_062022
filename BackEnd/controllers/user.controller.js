@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
             });
             user.save()
                 .then(() => res.status(201).json({ message: 'Utilisateur créé !', user: user.id }))
-                .catch(error => res.status(400).json({ error }));
+                .catch(() => res.status(400).json({ message: 'E-mail déjà enregistrer' }));
         })
         .catch(error => res.status(500).json({ error }));
 };
