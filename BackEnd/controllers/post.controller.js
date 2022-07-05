@@ -42,3 +42,24 @@ exports.createPost = (req, res) => {
     })
     .catch(error => res.status(500).json({ "error": "Utilisateur invalide" }));
 }
+
+// Permet d'afficher tous les messages
+exports.getAllPosts = (req, res) => {
+  models.Post.findAll({
+      order: [['createdAt', "DESC"]] ,
+      include: [{
+          model: models.User,
+          attributes: [ 'username' ]
+      }]
+  })
+  .then(postFound => {
+      if(postFound) {
+          res.status(200).json(postFound);
+      } else {
+          res.status(404).json({ error: 'Aucun message trouvé' });
+      }
+  })
+  .catch(error => {
+      res.status(500).send({ error: '⚠ Oops, champs invalides !' });
+  });
+}
