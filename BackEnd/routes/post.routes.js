@@ -10,6 +10,6 @@ const postCtrl = require("../controllers/post.controller");
 
 
 router.post("/", auth, postCtrl.createPost);
-
+router.get("/", postCtrl.getAllPosts);
 
 module.exports = router;
