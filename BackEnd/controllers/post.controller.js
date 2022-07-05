@@ -34,7 +34,7 @@ exports.createPost = (req, res) => {
                 UserId: userFound.id
             })
             post.save()
-            .then(() => res.status(201).json({ message: 'Votre message a bien été créé !' }))
+            .then(() => res.status(201).json({ message: 'Votre message a bien été créé !', content: content, UserId: userFound.id }))
             .catch(error => res.status(400).json({ error: '⚠ Oops, impossible de créer le post !' }));
         } else {
           return res.status(404).json({ error: 'Utilisateur non trouvé' })
