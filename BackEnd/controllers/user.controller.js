@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
             });
             user.save()
                 .then(() => res.status(201).json({ message: 'Utilisateur créé !', user: user.id }))
-                .catch(() => res.status(400).json({ message: 'E-mail déjà enregistrer' }));
+                .catch(() => res.status(400).json({ message: '⚠ Oops, E-mail déjà enregistrer' }));
         })
         .catch(error => res.status(500).json({ error }));
 };
@@ -28,13 +28,13 @@ exports.login = (req, res, next) => {
     .then(user => {
         if (!user) {
             console.log('echec de connection');
-            return res.status(401).json({ error: 'Utilisateur non trouvé !'});
+            return res.status(401).json({ error: '⚠ Oops, Utilisateur non trouvé !'});
         }
         //  Compare le mdp envoyé avec la requête et le hash
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
             if (!valid) {
-                return res.status(401).json({ error: 'Mot de passe incorrect !'});
+                return res.status(401).json({ error: '⚠ Oops, Mot de passe incorrect !'});
             }
             //  Connection réussie, id de l'utilisateur + token de connexion valide
             res.status(200).json({
