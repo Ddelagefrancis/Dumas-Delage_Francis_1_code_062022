@@ -14,12 +14,12 @@ exports.createPost = (req, res) => {
     
     // Permet de vérifier que tous les champs sont complétés
     if (content == null || content == '') {
-        return res.status(400).json({ error: 'Tous les champs doivent être renseignés' });
+        return res.status(400).json({ error: '⚠ Oops, Tous les champs doivent être renseignés' });
     } 
 
     // Permet de contrôler la longueur du titre et du contenu du message
     if (content.length <= 4) {
-        return res.status(400).json({ error: 'Le contenu du message doit contenir au moins 4 caractères' });
+        return res.status(400).json({ error: '⚠ Oops, Le contenu du message doit contenir au moins 4 caractères' });
     }
     
     models.User.findOne({
@@ -37,10 +37,10 @@ exports.createPost = (req, res) => {
             .then(() => res.status(201).json({ message: 'Votre message a bien été créé !', content: content, UserId: userFound.id }))
             .catch(error => res.status(400).json({ error: '⚠ Oops, impossible de créer le post !' }));
         } else {
-          return res.status(404).json({ error: 'Utilisateur non trouvé' })
+          return res.status(404).json({ error: '⚠ Oops, Utilisateur non trouvé' })
       }
     })
-    .catch(error => res.status(500).json({ "error": "Utilisateur invalide" }));
+    .catch(error => res.status(500).json({ "error": "⚠ Oops, Utilisateur invalide" }));
 }
 
 // Permet d'afficher tous les messages
@@ -56,10 +56,39 @@ exports.getAllPosts = (req, res) => {
       if(postFound) {
           res.status(200).json(postFound);
       } else {
-          res.status(404).json({ error: 'Aucun message trouvé' });
+          res.status(404).json({ error: '⚠ Oops, Aucun message trouvé' });
       }
   })
   .catch(error => {
       res.status(500).send({ error: '⚠ Oops, champs invalides !' });
   });
+}
+
+// Permet de modifier un message
+exports.modifyPost = (req, res) => {
+  const postObject = req.file ?
+  {
+  content: req.body.content,
+  attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body };
+
+  console.log('body', req.body);
+  console.log(req.params.id);
+
+  models.Post.findOne({
+      where: {  id: req.params.id },
+  })
+  .then(postFound => {
+      if(postFound) {
+        models.Post.update(postObject, {
+              where: { id: req.params.id}
+          })
+          .then(post => res.status(200).json({ message: 'Votre message a bien été modifié !' , content: req.body.content }))
+          .catch(error => res.status(400).json({ error: '⚠ Oops, message non modifié ! ' + error}))
+      }
+      else {
+          res.status(404).json({ error: '⚠ Oops, Message non trouvé' });
+      }
+  })
+  .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur 500 !' }));
 }
