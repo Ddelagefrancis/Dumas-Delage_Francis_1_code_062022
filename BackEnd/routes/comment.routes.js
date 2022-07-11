@@ -14,7 +14,7 @@ const commentCtrl = require('../controllers/comment.controller');
 router.post('/:postId', auth, commentCtrl.createComment);
 router.get('/:postId', auth, commentCtrl.getAllComments);
 router.delete('/:commentId', auth, commentCtrl.deleteComment);
-
+router.put('/:commentId', auth, commentCtrl.modifyComment);
 
 // Permet d'exporter le router
 module.exports = router;
