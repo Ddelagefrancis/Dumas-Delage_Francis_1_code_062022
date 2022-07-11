@@ -28,3 +28,22 @@ exports.createComment = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error: '⚠ Oops ! ' + error }));
 }
+
+// Permet d'afficher tous les commentaires
+exports.getAllComments = (req, res, next) => {
+    models.Comment.findAll({
+        order: [['updatedAt', "ASC"], ['createdAt', "ASC"]],
+        where: { postId: req.params.postId },
+    })
+    .then(commentFound => {
+        if(commentFound) {
+            res.status(200).json(commentFound);
+            console.log(commentFound);
+        } else {
+            res.status(404).json({ error: 'Aucun commentaire trouvé' });
+        }
+    })
+    .catch(error => {
+        res.status(500).send({ error: '⚠ Oops ! ' + error });
+    });
+}
