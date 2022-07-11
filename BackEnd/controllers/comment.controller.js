@@ -47,3 +47,24 @@ exports.getAllComments = (req, res, next) => {
         res.status(500).send({ error: '⚠ Oops ! ' + error });
     });
 }
+
+// Permet de supprimer un commentaire
+exports.deleteComment = (req, res, next) => {
+    models.Comment.findOne({
+        attributes: ['id'],
+        where: { id: req.params.commentId }
+    })
+    .then(commentFound => {
+        if(commentFound) {
+            models.Comment.destroy({ 
+                where: { id: req.params.commentId } 
+            })
+            .then(() => res.status(200).json({ message: 'Votre commentaire a été supprimé' }))
+            .catch(() => res.status(500).json({ error: '⚠ Oops ! ' + error }));
+            
+        } else {
+            return res.status(404).json({ error: 'Commentaire non trouvé'})
+        }
+    })
+    .catch(error => res.status(500).json({ error: '⚠ Oops ! ' + error }));
+}
