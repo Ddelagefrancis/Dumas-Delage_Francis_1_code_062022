@@ -12,13 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Post.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false
-        }
+        foreignKey: 'userId',
+        as: 'user',
       })
+      models.Post.hasMany(models.Like);
+      models.Post.hasMany(models.Comment);
     }
   }
   Post.init({
+    userId: {
+      type: DataTypes.INTEGER,
+      reference: {
+        model: 'User',
+        key: 'id'
+      }
+    },
     content: DataTypes.STRING,
     attachement: DataTypes.STRING,
     likes: DataTypes.INTEGER
