@@ -68,3 +68,28 @@ exports.deleteComment = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error: '⚠ Oops ! ' + error }));
 }
+
+// Permet de modifier un commentaire
+exports.modifyComment = (req, res) => {
+    const commentObject = req.file ?
+      {
+        content: req.body.content,
+      } : { ...req.body };
+    
+    models.Comment.findOne({
+      where: { id: req.params.commentId },
+    })
+      .then(commentFound => {
+        if (commentFound) {
+          models.Comment.update(commentObject, {
+            where: { id: req.params.commentId }
+          })
+            .then(comment => res.status(200).json({ message: 'Votre commentaire a bien été modifié !', content: req.body.content }))
+            .catch(error => res.status(400).json({ error: '⚠ Oops, commentaire non modifié ! ' + error }))
+        }
+        else {
+          res.status(404).json({ error: '⚠ Oops, commentaire non trouvé' });
+        }
+      })
+      .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur 500 ! ' + error }));
+  }
