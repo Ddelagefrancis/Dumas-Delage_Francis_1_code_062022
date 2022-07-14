@@ -35,19 +35,18 @@ exports.likePost = (req, res) => {
                                     where: { id: postId }
                                 })
                                     .then(() => res.status(201).json({ message: 'Vous aimez ce message !' }))
-                                    .catch(error => res.status(400).json({ error }))
+                                    .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
                             })
-                            .catch(error => res.status(400).json({ error }))
+                            .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
                     } else {
                         res.status(404).json({ error: '⚠ oups, message déjà liker ' })
                     }
                 }
 
             })
-            .catch(error => res.status(400).json({ message: 'oupsi ' + error }))
+            .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
     })
 }
-
 
 // // Permet de disliker un message
 exports.dislikePost = (req, res) => {
@@ -79,15 +78,15 @@ exports.dislikePost = (req, res) => {
                                     where: { id: postId }
                                 })
                                     .then(() => res.status(201).json({ message: 'Vous n\'aimez plus ce message !' }))
-                                    .catch(error => res.status(400).json({ error }))
+                                    .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
                             })
-                            .catch(error => res.status(400).json({ error }))
+                            .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
                     } else {
                         res.status(404).json({ error: '⚠ oups, message déjà disliker ' })
                     }
                 }
 
             })
-            .catch(error => res.status(400).json({ message: 'oupsi ' + error }))
+            .catch(error => res.status(400).json({ message: '⚠ oups ' + error }))
     })
 }
