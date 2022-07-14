@@ -66,10 +66,9 @@ exports.dislikePost = (req, res) => {
                 if (postFound == null) {
                     res.status(404).json({ error: 'Le message n\'a pas été trouvé' })
                 } else {
-                    if (likeFound == null) {
+                    if (likeFound) {
                         models.Like.destroy({
-                            postId: postId,
-                            userId: userId
+                            where: { userId: userId, postId: postId },
                         })
                             .then(() => {
                                 models.Post.update({
