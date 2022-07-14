@@ -12,37 +12,40 @@ exports.likePost = (req, res) => {
     const userId = decodedToken.userId;
     const postId = req.params.postId;
 
-    const isliked = models.Like.findOne({
+    models.Like.findOne({
         where: { userId: userId, postId: postId },
-    })
+    }).then(likeFound => {
 
-    models.Post.findOne({
-        where: { id: postId },
-    })
-        .then(postFound => {
-            if (!postFound) {
-                res.status(404).json({ error: 'Le message n\'a pas été trouvé' })
-            } else if (isliked) {
-                models.Like.create({
-                    postId: postId,
-                    userId: userId
-                })
-                    .then(() => {
-                        models.Post.update({
-                            likes: postFound.likes + 1
-                        }, {
-                            where: { id: postId }
-                        })
-                            .then(() => res.status(201).json({ message: 'Vous aimez ce message !' }))
-                            .catch(error => res.status(400).json({ error: '⚠ oups, message déjà liker ' }))
-                    })
-                    .catch(error => res.status(400).json({ error }))
-            }
-            else {
-                console.log(error);
-            }
+        models.Post.findOne({
+            where: { id: postId },
         })
-        .catch(error => res.status(400).json({ message: 'oupsi ' + error }))
+            .then(postFound => {
+                if (postFound == null) {
+                    res.status(404).json({ error: 'Le message n\'a pas été trouvé' })
+                } else {
+                    if (likeFound == null) {
+                        models.Like.create({
+                            postId: postId,
+                            userId: userId
+                        })
+                            .then(() => {
+                                models.Post.update({
+                                    likes: postFound.likes + 1
+                                }, {
+                                    where: { id: postId }
+                                })
+                                    .then(() => res.status(201).json({ message: 'Vous aimez ce message !' }))
+                                    .catch(error => res.status(400).json({ error }))
+                            })
+                            .catch(error => res.status(400).json({ error }))
+                    } else {
+                        res.status(404).json({ error: '⚠ oups, message déjà liker ' })
+                    }
+                }
+
+            })
+            .catch(error => res.status(400).json({ message: 'oupsi ' + error }))
+    })
 }
 
 
@@ -53,36 +56,38 @@ exports.dislikePost = (req, res) => {
     const userId = decodedToken.userId;
     const postId = req.params.postId;
 
-    const isliked = models.Like.findOne({
+    models.Like.findOne({
         where: { userId: userId, postId: postId },
-    })
+    }).then(likeFound => {
 
-    models.Post.findOne({
-        where: { id: postId },
-    })
-        .then(postFound => {
-            if (!postFound) {
-                res.status(404).json({ error: 'Le message n\'a pas été trouvé' })
-            } else if (isliked) {
-                models.Like.destroy({
-                    where: {
-                        postId: postId,
-                        userId: userId
-                    }
-                })
-                    .then(() => {
-                        models.Post.update({
-                            likes: postFound.likes - 1
-                        }, {
-                            where: { id: postId }
-                        })
-                            .then(() => res.status(201).json({ message: 'Vous n\'aimez plus ce message' }))
-                            .catch(error => res.status(400).json({ error: '⚠ oups, message déjà liker ' }))
-                    })
-                    .catch(error => res.status(400).json({ error }))
-            } else {
-                console.log(error);
-            }
+        models.Post.findOne({
+            where: { id: postId },
         })
-        .catch(error => res.status(400).json({ error: '⚠ oupsi ' + error }))
+            .then(postFound => {
+                if (postFound == null) {
+                    res.status(404).json({ error: 'Le message n\'a pas été trouvé' })
+                } else {
+                    if (likeFound == null) {
+                        models.Like.destroy({
+                            postId: postId,
+                            userId: userId
+                        })
+                            .then(() => {
+                                models.Post.update({
+                                    likes: postFound.likes - 1
+                                }, {
+                                    where: { id: postId }
+                                })
+                                    .then(() => res.status(201).json({ message: 'Vous n\'aimez plus ce message !' }))
+                                    .catch(error => res.status(400).json({ error }))
+                            })
+                            .catch(error => res.status(400).json({ error }))
+                    } else {
+                        res.status(404).json({ error: '⚠ oups, message déjà disliker ' })
+                    }
+                }
+
+            })
+            .catch(error => res.status(400).json({ message: 'oupsi ' + error }))
+    })
 }
