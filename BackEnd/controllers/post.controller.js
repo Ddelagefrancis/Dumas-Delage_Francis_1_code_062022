@@ -35,7 +35,7 @@ exports.createPost = (req, res) => {
           UserId: userFound.id
         })
         post.save()
-          .then(() => res.status(201).json({ message: 'Votre message a bien été créé !', content: content, UserId: userFound.id }))
+          .then(() => res.status(201).json({ message: 'Votre message a bien été créé !', content: content, attachement: req.body.attachement, UserId: userFound.id }))
           .catch(error => res.status(400).json({ error: '⚠ Oops, impossible de créer le post !' }));
       } else {
         return res.status(404).json({ error: '⚠ Oops, Utilisateur non trouvé' })
@@ -73,8 +73,8 @@ exports.modifyPost = (req, res) => {
       attachement: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
 
-  console.log('body', req.body);
-  console.log(req.params.id);
+  // console.log('body', req.body);
+  // console.log(req.params.id);
 
   models.Post.findOne({
     where: { id: req.params.id },
@@ -96,14 +96,50 @@ exports.modifyPost = (req, res) => {
 
 // Permet de supprimer un message
 exports.deletePost = (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
+  const userId = decodedToken.userId;
+
   models.Post.findOne({
     attributes: ['id'],
     where: { id: req.params.id }
   })
-    .then(post => {
-      if (post) {
-        if (post.attachement != null) {
-          const filename = post.attachement.split('/images/')[1];
+    .then(postFound => {
+      if (postFound) {
+        if (postFound.attachement != null) {
+          const filename = postFound.attachement.split('/images/')[1];
+
+          fs.unlink(`images/${filename}`, () => {
+            models.Post.destroy({
+              where: { id: req.params.id }
+            })
+              .then(() => res.status(200).json({ message: 'Votre message avec image a été supprimé' }))
+              .catch(() => res.status(500).json({ error: '⚠ Oops, impossible de supprimé votre message avec image !' }));
+          })
+        } else {
+          models.Post.destroy({
+            where: {  id: req.params.id, userId: userId }
+          })
+            .then(() => res.status(200).json({ message: 'Votre message a été supprimé' }))
+            .catch(() => res.status(500).json({ error: '⚠ Oops, impossible de supprimé votre message !' }));
+        }
+      } else {
+        res.status(404).json({ error: '⚠ Oops, Message non trouvé' })
+      }
+    })
+    .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur 500 ! ' + error }));
+}
+
+// Supprimer un post par l'admin
+exports.adminDeletePost = (req, res) => {
+  models.Post.findOne({
+    attributes: ['id'],
+    where: { id: req.params.id }
+  })
+    .then(postFound => {
+      if (postFound) {
+        if (postFound.attachement != null) {
+          const filename = postFound.attachement.split('/images/')[1];
 
           fs.unlink(`images/${filename}`, () => {
             models.Post.destroy({
@@ -116,12 +152,12 @@ exports.deletePost = (req, res) => {
           models.Post.destroy({
             where: { id: req.params.id }
           })
-            .then(() => res.status(200).json({ message: 'Votre message a été supprimé' }))
-            .catch(() => res.status(500).json({ error: '⚠ Oops, impossible de supprimé votre message !' }));
+            .then(() => res.status(200).json({ message: 'Vous avez supprimé la publication du user' }))
+            .catch(error => res.status(400).json({ error }))
         }
       } else {
-        return res.status(404).json({ error: '⚠ Oops, Message non trouvé' })
+        res.status(404).json({ error: '⚠ Oops, Message non trouvé' })
       }
     })
-    .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur 500 !' }));
+    .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur 500 ! ' + error }));
 }
