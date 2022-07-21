@@ -15,7 +15,7 @@ router.get("/", postCtrl.getAllPosts);
 router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
 
-// Requête DELETE de l'administrateur pour supprimer un post  ***/
+// Requête de l'administrateur
 router.delete('/admin/:id', auth, multer, postCtrl.adminDeletePost);
 
 // Routes de l'API pour les likes
