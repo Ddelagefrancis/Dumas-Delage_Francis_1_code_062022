@@ -42,6 +42,7 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
             />
+            <div className="email error"></div>
             <br />
             <label htmlFor="password">Mot de passe</label>
             <br />
@@ -52,6 +53,7 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
             />
+            <div className="password error"></div>
             <br />
             <input type="submit" value="Se connecter" />
         </ form>
