@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require("helmet");
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors')
 
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
@@ -9,14 +10,17 @@ const commentRoutes = require('./routes/comment.routes');
 
 const app = express();
 
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cross-Origin-Resource-Policy', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
 
+app.use(cors())
 
 //Security & data
 app.use(express.json());
