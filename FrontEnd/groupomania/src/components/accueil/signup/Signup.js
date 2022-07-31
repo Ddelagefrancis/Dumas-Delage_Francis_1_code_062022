@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 function Signup() {
     const [pseudo, setPseudo] = useState('');
@@ -14,7 +14,6 @@ function Signup() {
     return (
         <form action="" onSubmit={handleRegister} id="signup">
             <label htmlFor="pseudo">Pseudo</label>
-            <br />
             <input
                 type="text"
                 name="pseudo"
@@ -25,7 +24,6 @@ function Signup() {
             <div className="pseudo error"></div>
             <br />
             <label htmlFor="email">Email</label>
-            <br />
             <input
                 type="text"
                 name="email"
@@ -36,7 +34,6 @@ function Signup() {
             <div className="email error"></div>
             <br />
             <label htmlFor="password">Mot de passe</label>
-            <br />
             <input
                 type="password"
                 name="password"
@@ -47,7 +44,6 @@ function Signup() {
             <div className="password error"></div>
             <br />
             <label htmlFor="password-conf">Confirmer mot de passe</label>
-            <br />
             <input
                 type="password"
                 name="password"
@@ -57,7 +53,7 @@ function Signup() {
             />
             <div className="password-confirm error"></div>
             <br />
-            <input type="submit" value="Valider inscription" />
+            <input type="submit" value="Valider inscription" className='button' />
         </form>
     );
 }

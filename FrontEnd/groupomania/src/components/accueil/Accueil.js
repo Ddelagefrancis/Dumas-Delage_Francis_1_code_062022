@@ -2,17 +2,15 @@ import { Link, Outlet } from 'react-router-dom';
 
 function Accueil() {
   return (
-    <div >
+    <div className='accueil'>
       <div className="accueil-container">
-        <img src="./img/icon-left-font.png" alt="img-acceuil" />
+        <img src="./img/icon-left-font.png" alt="img-acceuil" className="accueil_img" />
         <p>Réseau social interne pour les employés</p>
+        <img src="./img/social_img.png" alt="img-social" className="accueil-social_img " />
       </div >
-      {/* <div className="accueil-social_img">
-        <img src="./img/social_network.png" alt="img-acceuil" />
-      </div > */}
       <nav>
-        <Link to="/signup">S'inscrire</Link>
-        <Link to="/login">Se connecter</Link>
+        <Link to="/signup" className="nav">S'inscrire</Link>
+        <Link to="/login" className="nav">Se connecter</Link>
       </nav>
       <Outlet />
     </div>

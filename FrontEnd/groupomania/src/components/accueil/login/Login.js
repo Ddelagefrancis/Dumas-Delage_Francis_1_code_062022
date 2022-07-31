@@ -34,7 +34,6 @@ function Login() {
     return (
         <form action="" onSubmit={handleLogin} id="sign-up-form">
             <label htmlFor="email">Email</label>
-            <br />
             <input
                 type="text"
                 name="email"
@@ -45,7 +44,6 @@ function Login() {
             <div className="email error"></div>
             <br />
             <label htmlFor="password">Mot de passe</label>
-            <br />
             <input
                 type="password"
                 name="password"
@@ -55,7 +53,7 @@ function Login() {
             />
             <div className="password error"></div>
             <br />
-            <input type="submit" value="Se connecter" />
+            <input type="submit" value="Se connecter" className='button'/>
         </ form>
     );
 }
