@@ -12,6 +12,7 @@ function Signup() {
     }
 
     return (
+        <div className='logs'>
         <form action="" onSubmit={handleRegister} id="signup" className='form_logs'>
             <label htmlFor="pseudo">Pseudo</label>
             <input
@@ -55,6 +56,7 @@ function Signup() {
             <br />
             <input type="submit" value="Valider inscription" className='button' />
         </form>
+        </div>
     );
 }
 

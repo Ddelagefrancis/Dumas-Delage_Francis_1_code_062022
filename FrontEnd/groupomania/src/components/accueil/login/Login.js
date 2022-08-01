@@ -32,6 +32,7 @@ function Login() {
             });
     };
     return (
+        <div className='logs'>
         <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
             <label htmlFor="email">Email</label>
             <input
@@ -55,6 +56,7 @@ function Login() {
             <br />
             <input type="submit" value="Se connecter" className='button'/>
         </ form>
+        </div>
     );
 }
 
