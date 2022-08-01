@@ -32,7 +32,7 @@ function Login() {
             });
     };
     return (
-        <form action="" onSubmit={handleLogin} id="sign-up-form">
+        <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
             <label htmlFor="email">Email</label>
             <input
                 type="text"

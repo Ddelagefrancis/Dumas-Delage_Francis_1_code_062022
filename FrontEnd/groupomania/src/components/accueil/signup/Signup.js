@@ -12,7 +12,7 @@ function Signup() {
     }
 
     return (
-        <form action="" onSubmit={handleRegister} id="signup">
+        <form action="" onSubmit={handleRegister} id="signup" className='form_logs'>
             <label htmlFor="pseudo">Pseudo</label>
             <input
                 type="text"
