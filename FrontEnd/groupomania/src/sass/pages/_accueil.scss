@@ -1,31 +1,40 @@
 .App {
     width: 100%;
-    margin: 0;
+    margin: auto;
 }
 
 .accueil {
     background: $color-secondary;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .accueil-container {
-    margin-left: 1%;
-    margin-top: 25px;
+    background: #F2F2F2;
+    border-radius: 25px;
+    padding: 5px 18px;
+    box-shadow: 0px 0px 6px 0px #0000002e;
+    margin: 25px;
+
+    & p {
+        text-align: center;
+    }
 }
 
-.accueil_img {
-    display: block;
-}
+// .accueil_img {
+
+// }
 
 .accueil-social_img {
-    width: 50%;
+    width: 30%;
+    padding: 10px;
+    margin-left: 35%;
 }
 
 nav {
     display: flex;
     align-items: flex-start;
+    margin-top: 25px;
 
     & .nav {
         display: inline-block;
