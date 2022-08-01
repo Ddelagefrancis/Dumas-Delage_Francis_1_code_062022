@@ -1,11 +1,19 @@
+.logs {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 80px 0px ;
+}
+
 .form_logs {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     flex-direction: column;
     border-radius: 20px;
     border: 5px solid transparent;
     margin: 10px 0px auto 0;
     width: 200px;
+    color: $color-secondary;
     background-color: $color-tertiary;
 
     & .button {
