@@ -1,23 +1,24 @@
-form {
+.form_logs {
     display: flex;
     align-items: center;
     flex-direction: column;
     border-radius: 20px;
     border: 5px solid transparent;
-    margin: 0px 0px 5px 0;
+    margin: 10px 0px auto 0;
     width: 200px;
+    background-color: $color-tertiary;
 
     & .button {
         border: none;
         border-radius: 14px 14px 14px 14px;
-        background-color: rgba($color-primary, 0.7);
+        background-color: $color-primary;
         color: white;
         font-weight: 400;
         padding: 17px;
         cursor: pointer;
 
         &:hover {
-            background-color: $color-primary;
+            background-color: rgba($color-primary, 0.7);
         }
     }
 
