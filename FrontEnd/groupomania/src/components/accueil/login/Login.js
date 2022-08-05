@@ -13,10 +13,9 @@ function Login() {
         axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/user/login`,
-            withCredentials: true,
             data: {
-                email,
-                password,
+                email: email,
+                password: password,
             },
         })
             .then((res) => {
@@ -31,31 +30,32 @@ function Login() {
                 console.log(err);
             });
     };
+    
     return (
         <div className='logs'>
-        <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
-            <label htmlFor="email">Email</label>
-            <input
-                type="text"
-                name="email"
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-            />
-            <div className="email error"></div>
-            <br />
-            <label htmlFor="password">Mot de passe</label>
-            <input
-                type="password"
-                name="password"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-            />
-            <div className="password error"></div>
-            <br />
-            <input type="submit" value="Se connecter" className='button'/>
-        </ form>
+            <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
+                <label htmlFor="email">Email</label>
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                />
+                <div className="email error"></div>
+                <br />
+                <label htmlFor="password">Mot de passe</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                />
+                <div className="password error"></div>
+                <br />
+                <input type="submit" value="Se connecter" className='button' />
+            </ form>
         </div>
     );
 }
