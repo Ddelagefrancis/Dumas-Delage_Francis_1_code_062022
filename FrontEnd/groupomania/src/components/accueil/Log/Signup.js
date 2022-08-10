@@ -72,8 +72,8 @@ function Signup() {
                             id="username"
                             onChange={handleInput}
                             value={user.username}
+                            required
                         />
-                        <div className="username error"></div>
                         <br />
                         <label htmlFor="email">Email</label>
                         <input
@@ -83,8 +83,8 @@ function Signup() {
                             id="email"
                             onChange={handleInput}
                             value={user.email}
+                            required
                         />
-                        <div className="email error"></div>
                         <br />
                         <label htmlFor="password">Mot de passe</label>
                         <input
@@ -94,8 +94,8 @@ function Signup() {
                             id="password"
                             onChange={handleInput}
                             value={user.password}
+                            required
                         />
-                        <div className="password error"></div>
                         <br />
                         <input type="submit" value="Valider inscription" className='button' />
                         <div className="errorUser"></div>
