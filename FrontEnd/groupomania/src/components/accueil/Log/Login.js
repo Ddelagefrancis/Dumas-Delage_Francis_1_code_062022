@@ -55,35 +55,33 @@ function Login() {
 
     return (
         <>
-        <div className='logs'>
-          <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
-              <label htmlFor="email">Email</label>
-                <input
-                className="inp-email"
-                    type="email"
-                    name="email"
-                    id="email"
-                    onChange={handleInput}
-                    value={user.email}
-                />
-                <div className="email error"></div>
-                <br />
-                <label htmlFor="password">Mot de passe</label>
-                <input
-                className="inp-password"
-                    type="password"
-                    name="password"
-                    id="password"
-                    onChange={handleInput}
-                    value={user.password}
-                />
-                <div className="password error"></div>
-                <br />
-                <input type="submit" value="Se connecter" className='button' />
-            </ form>
-        </div>
-         <p className="usernotfound">{user.msgError}</p>
-         </>
+            <div className='logs'>
+                <form action="" onSubmit={handleLogin} id="sign-up-form" className='form_logs' >
+                    <label htmlFor="email">Email</label>
+                    <input
+                        className="inp-email"
+                        type="email"
+                        name="email"
+                        id="email"
+                        onChange={handleInput}
+                        value={user.email}
+                    />
+                    <br />
+                    <label htmlFor="password">Mot de passe</label>
+                    <input
+                        className="inp-password"
+                        type="password"
+                        name="password"
+                        id="password"
+                        onChange={handleInput}
+                        value={user.password}
+                    />
+                    <br />
+                    <input type="submit" value="Se connecter" className='button' />
+                    <p className="usernotfound">{user.msgError}</p>
+                </ form>
+            </div>
+        </>
     );
 }
 
