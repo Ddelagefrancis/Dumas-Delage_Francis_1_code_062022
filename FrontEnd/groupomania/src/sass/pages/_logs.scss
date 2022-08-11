@@ -12,24 +12,23 @@
     border: 5px solid transparent;
     margin: 10px 0px auto 0;
     width: 200px;
-    color: $color-secondary;
-    background-color: $color-tertiary;
+    color: $color-2;
+    background-color: $color-3;
 
     & .button {
         border: none;
         border-radius: 14px 14px 14px 14px;
-        background-color: $color-primary;
+        background-color: $color-1;
         color: white;
         font-weight: 400;
-        padding: 17px;
+        padding: 10px;
         cursor: pointer;
 
         &:hover {
-            background-color: rgba($color-primary, 0.7);
+            background-color: rgba($color-1, 0.7);
         }
     }
-
-    & .error {
+    & .errorUser {
         margin: 5px;
         text-align: center;
         color: red;
